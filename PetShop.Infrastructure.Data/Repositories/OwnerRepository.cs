@@ -4,7 +4,7 @@ using System.Text;
 using PetShop.Core.DomainServices;
 using PetShop.Core.Entity;
 
-namespace PetShop.Infrastructure.Data
+namespace PetShop.Infrastructure.Data.Repositories
 {
     public class OwnerRepository : IOwnerRepository
     {

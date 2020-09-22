@@ -124,6 +124,4 @@ namespace PetShop.RestAPI.Controllers
             }
         }
     }
-
-    }
 }

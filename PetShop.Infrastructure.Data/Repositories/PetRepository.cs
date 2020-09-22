@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace PetShop.Infrastructure.Data
+namespace PetShop.Infrastructure.Data.Repositories
 {
     public class PetRepository : IPetRepository
     {
