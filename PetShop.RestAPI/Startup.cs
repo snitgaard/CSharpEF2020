@@ -69,8 +69,12 @@ namespace PetShop.RestAPI
                     var petRepo = scope.ServiceProvider.GetService<IPetRepository>();
                     var ownerRepo = scope.ServiceProvider.GetService<IOwnerRepository>();
                     var petTypeRepo = scope.ServiceProvider.GetService<IPetTypeRepository>();
-                //new DataInit(petRepo, ownerRepo, petTypeRepo).InitData();
-            }
+
+                    var ctx = scope.ServiceProvider.GetService<PetShopContext>();
+                    DBInitializer.SeedDB(ctx);
+
+                    //new DataInit(petRepo, ownerRepo, petTypeRepo).InitData(); fuck this fucker
+                }
             //}
 
             app.UseHttpsRedirection();

@@ -36,6 +36,7 @@ namespace PetShop.RestAPI.Controllers
 
         // GET api/<PetTypeController>/5
         [HttpGet("{id}")]
+        [Route("[action]/{id}")]
         public ActionResult<PetType> Get(int id)
         {
             var petType = _petTypeService.FindPetTypeById(id);

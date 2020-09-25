@@ -24,7 +24,9 @@ namespace PetShop.Infrastructure.Database.Repositories
 
         public Pet Delete(int id)
         {
-            throw new NotImplementedException();
+            var petRemoved = _ctx.Remove(new Pet {Id = id}).Entity;
+            _ctx.SaveChanges();
+            return petRemoved;
         }
 
         public Pet ReadById(int id)
