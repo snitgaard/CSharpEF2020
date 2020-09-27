@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 using PetShop.Core.DomainServices;
 using PetShop.Core.Entity;
 
@@ -36,7 +37,7 @@ namespace PetShop.Infrastructure.Database.Repositories
 
         public IEnumerable<Pet> ReadPets()
         {
-            return _ctx.Pets;
+            return _ctx.Pets.AsNoTracking().Include(p => p.Owner);
         }
 
         public Pet Update(Pet petUpdate)

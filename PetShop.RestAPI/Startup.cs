@@ -45,6 +45,9 @@ namespace PetShop.RestAPI
             services.AddScoped<IPetTypeRepository, PetTypeSqlRepository>();
             services.AddScoped<IPetTypeService, PetTypeService>();
 
+            services.AddControllers().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
             services.AddControllers();
 
             services.AddSwaggerGen(options => {

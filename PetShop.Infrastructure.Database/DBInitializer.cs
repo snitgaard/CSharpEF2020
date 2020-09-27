@@ -11,6 +11,16 @@ namespace PetShop.Infrastructure.Database
         {
             ctx.Database.EnsureDeleted();
             ctx.Database.EnsureCreated();
+            var owner1 = ctx.Owners.Add(new Owner()
+            {
+                Name = "MichaelJackson",
+                Address = "NeverLand"
+            }).Entity;
+            var owner2 = ctx.Owners.Add(new Owner()
+            {
+                Name = "FogHat",
+                Address = "GreatMusicStreet"
+            }).Entity;
             var pet1 = ctx.Pets.Add(new Pet()
             {
                 Name = "BillyJoel",
@@ -19,7 +29,8 @@ namespace PetShop.Infrastructure.Database
                 BirthDate = new DateTime(2018, 6, 10),
                 Price = 100,
                 SoldDate = new DateTime(2018, 7, 10),
-                PreviousOwner = "JohnnyBravo"
+                PreviousOwner = "JohnnyBravo",
+                Owner = owner1
             }).Entity;
             var pet2 = ctx.Pets.Add(new Pet()
 
@@ -30,17 +41,8 @@ namespace PetShop.Infrastructure.Database
                 BirthDate = new DateTime(2015, 4, 22),
                 Price = 100,
                 SoldDate = new DateTime(2020, 6, 1),
-                PreviousOwner = "HallAndOates"
-            }).Entity;
-            var owner1 = ctx.Owners.Add(new Owner()
-            {
-                Name = "MichaelJackson",
-                Address = "NeverLand"
-            }).Entity;
-            var owner2 = ctx.Owners.Add(new Owner()
-            {
-                Name = "FogHat",
-                Address = "GreatMusicStreet"
+                PreviousOwner = "HallAndOates",
+                Owner = owner2
             }).Entity;
             ctx.SaveChanges();
         }

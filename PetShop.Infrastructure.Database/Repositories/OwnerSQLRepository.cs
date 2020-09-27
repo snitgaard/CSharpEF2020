@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 
 namespace PetShop.Infrastructure.Database.Repositories
 {
@@ -31,7 +32,7 @@ namespace PetShop.Infrastructure.Database.Repositories
 
         public Owner ReadById(int id)
         {
-            return _ctx.Owners.FirstOrDefault(o => o.Id == id);
+            return _ctx.Owners.AsTracking().Include(o => o.Pets).FirstOrDefault(o => o.Id == id);
         }
 
         public IEnumerable<Owner> ReadOwners()
