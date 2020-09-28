@@ -35,6 +35,11 @@ namespace PetShop.RestAPI
             services.AddDbContext<PetShopContext>(
                 opt => opt.UseInMemoryDatabase("ThaDb")
                 );
+            services.AddCors(options => options.AddDefaultPolicy(builder =>
+            {
+                builder.AllowAnyOrigin();
+            }));
+
 
             services.AddScoped<IPetRepository, PetSqlRepository>();
             services.AddScoped<IPetService, PetService>();
@@ -83,6 +88,8 @@ namespace PetShop.RestAPI
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors();
 
             app.UseAuthorization();
 
