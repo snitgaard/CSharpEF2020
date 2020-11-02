@@ -81,15 +81,7 @@ namespace PetShop.Core.ApplicationServices.Services
 
         public Pet UpdatePet(Pet petUpdate)
         {
-            var pet = FindPetById(petUpdate.Id);
-            pet.Name = petUpdate.Name;
-            pet.Type = petUpdate.Type;
-            pet.BirthDate = petUpdate.BirthDate;
-            pet.SoldDate = petUpdate.SoldDate;
-            pet.Color = petUpdate.Color;
-            pet.PreviousOwner = petUpdate.PreviousOwner;
-            pet.Price = petUpdate.Price;
-            return pet;
+            return _petRepo.Update(petUpdate);
         }
         public Pet DeletePet(int id)
         {

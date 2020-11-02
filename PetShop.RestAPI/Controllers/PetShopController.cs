@@ -20,16 +20,13 @@ namespace PetShop.RestAPI.Controllers
         {
             _petService = petService;
         }
-        /// <summary>
-        /// Returns list of all pets as JSON
-        /// </summary>
-        /// <returns></returns>
+
         [HttpGet]
-        public ActionResult<IEnumerable<Pet>> Get()
+        public ActionResult<List<Pet>> Get()
         {
             try
             {
-                return Ok(_petService.GetPets());
+                return _petService.GetPets();
             }
             catch (Exception)
             {
@@ -37,11 +34,6 @@ namespace PetShop.RestAPI.Controllers
             }
         }
 
-        /// <summary>
-        /// Returns pet with the ID
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
         [HttpGet("{id}")]
         [Route("[action]/{id}")]
         public ActionResult<Pet> Get(int id)
@@ -61,11 +53,6 @@ namespace PetShop.RestAPI.Controllers
             }
         }
 
-        /// <summary>
-        /// Returns the Pet that was created
-        /// </summary>
-        /// <param name="pet"></param>
-        /// <returns></returns>
         [HttpPost]
         public ActionResult<Pet> Post([FromBody] Pet pet)
         {
@@ -77,35 +64,17 @@ namespace PetShop.RestAPI.Controllers
             return _petService.CreatePet(pet); 
         }
 
-
-        /// <summary>
-        /// Returns the Pet that was updated
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="pet"></param>
         [HttpPut("{id}")]
         public ActionResult<Pet> Put(int id, [FromBody] Pet pet)
         {
-            var updatePet = _petService.UpdatePet(pet);
-            if (updatePet == null)
+            if (id < 1 || id != pet.Id)
             {
-                return StatusCode(404, "Pet was not found");
+                return BadRequest("No");
             }
 
-            try
-            {
-                return updatePet;
-            }
-            catch (Exception)
-            {
-                return StatusCode(500, "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-            }
+            return Ok(_petService.UpdatePet(pet));
         }
 
-        /// <summary>
-        /// Returns the pet deleted
-        /// </summary>
-        /// <param name="id"></param>
         [HttpDelete("{id}")]
         public ActionResult<Pet> Delete(int id)
         {

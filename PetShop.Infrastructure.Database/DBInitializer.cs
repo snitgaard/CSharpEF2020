@@ -88,7 +88,6 @@ namespace PetShop.Infrastructure.Database
                     IsAdmin = true
                 }
             };
-
             ctx.TodoItems.AddRange(items);
             ctx.Users.AddRange(users);
             ctx.SaveChanges();

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using PetShop.Core.DomainServices;
@@ -18,9 +19,9 @@ namespace PetShop.Infrastructure.Database.Repositories
 
         public Pet Create(Pet pet)
         {
-            var createdPet = _ctx.Pets.Add(pet).Entity;
+            _ctx.Attach(pet).State = EntityState.Added;
             _ctx.SaveChanges();
-            return createdPet;
+            return pet;
         }
 
         public Pet Delete(int id)
@@ -42,7 +43,10 @@ namespace PetShop.Infrastructure.Database.Repositories
 
         public Pet Update(Pet petUpdate)
         {
-            throw new NotImplementedException();
+            _ctx.Attach(petUpdate).State = EntityState.Modified;
+            //_ctx.Entry(petUpdate).Reference(p => p.Name).IsModified = true;
+            _ctx.SaveChanges();
+            return petUpdate;
         }
     }
 }

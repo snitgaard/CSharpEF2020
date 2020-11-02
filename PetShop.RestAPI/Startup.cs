@@ -83,8 +83,24 @@ namespace PetShop.RestAPI
                         builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
                     })
             );
-
-
+            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+            {
+                builder.WithOrigins("https://petshopappangular.web.app/")
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            }));
+            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+            {
+                builder.WithOrigins("http://localhost:4200")
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            }));
+            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+            {
+                builder.WithOrigins("https://localhost:44314/api/petshop")
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            }));
             if (Environment.IsDevelopment())
             {
                 services.AddDbContext<PetShopContext>(
@@ -95,8 +111,9 @@ namespace PetShop.RestAPI
                 services.AddDbContext<PetShopContext>(opt =>
                     opt.UseSqlServer(Configuration.GetConnectionString("defaultConnection")));
             }
- 
 
+
+            services.AddDbContext<PetShopContext>(opt => opt.UseSqlite("Data Source=petApp.db"));
             services.AddScoped<IPetRepository, PetSqlRepository>();
             services.AddScoped<IPetService, PetService>();
 
@@ -105,6 +122,7 @@ namespace PetShop.RestAPI
 
             services.AddScoped<IPetTypeRepository, PetTypeSqlRepository>();
             services.AddScoped<IPetTypeService, PetTypeService>();
+            services.AddTransient<IDBInitializer, DBInitializer>();
 
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
@@ -126,23 +144,19 @@ namespace PetShop.RestAPI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            //if (env.IsDevelopment())
-            //{
+            if (env.IsDevelopment())
+            {
                 app.UseDeveloperExceptionPage();
                 using (var scope = app.ApplicationServices.CreateScope())
                 {
-                    var petRepo = scope.ServiceProvider.GetService<IPetRepository>();
-                    var ownerRepo = scope.ServiceProvider.GetService<IOwnerRepository>();
-                    var petTypeRepo = scope.ServiceProvider.GetService<IPetTypeRepository>();
-
                     var services = scope.ServiceProvider;
                     var ctx = scope.ServiceProvider.GetService<PetShopContext>(); 
                     var dbInitializer = services.GetService<IDBInitializer>();
                     dbInitializer.SeedDB(ctx);
 
-                    //new DataInit(petRepo, ownerRepo, petTypeRepo).InitData(); fuck this fucker
+                    var petRepo = scope.ServiceProvider.GetService<IPetRepository>();
                 }
-            //}
+            }
 
             app.UseHttpsRedirection();
 
