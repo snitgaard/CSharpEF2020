@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using PetShop.Core.Entity;
 using PetShop.Infrastructure.Database.Helpers;
@@ -56,7 +57,7 @@ namespace PetShop.Infrastructure.Database
 
             if (ctx.TodoItems.Any())
             {
-                return;   // DB has been seeded
+                return;
             }
 
             List<TodoItem> items = new List<TodoItem>
