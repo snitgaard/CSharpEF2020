@@ -85,22 +85,12 @@ namespace PetShop.RestAPI
             );
             services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
             {
-                builder.WithOrigins("https://petshopappangular.web.app/")
-                    .AllowAnyMethod()
-                    .AllowAnyHeader();
+                builder
+                    .WithOrigins("https://petshopappangular.web.app/").AllowAnyMethod().AllowAnyHeader()
+                    .WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader()
+                    .WithOrigins("https://localhost:44314/api/petshop").AllowAnyMethod().AllowAnyHeader();
             }));
-            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
-            {
-                builder.WithOrigins("http://localhost:4200")
-                    .AllowAnyMethod()
-                    .AllowAnyHeader();
-            }));
-            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
-            {
-                builder.WithOrigins("https://localhost:44314/api/petshop")
-                    .AllowAnyMethod()
-                    .AllowAnyHeader();
-            }));
+
             if (Environment.IsDevelopment())
             {
                 services.AddDbContext<PetShopContext>(
