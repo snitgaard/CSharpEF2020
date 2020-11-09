@@ -62,12 +62,11 @@ namespace PetShop.Infrastructure.Database
 
             List<TodoItem> items = new List<TodoItem>
             {
-                new TodoItem { IsComplete=true, Name="Make homework"},
-                new TodoItem { IsComplete=false, Name="Sleep"},
-                new TodoItem { IsComplete=false, Name="<h3>Message from a Black Hat! Ha, ha, ha...<h3>"}
+                new TodoItem { IsComplete=true, Name="Do Stuff"},
+                new TodoItem { IsComplete=false, Name="Hmm"}
             };
 
-            // Create two users with hashed and salted passwords
+            
             string password = "1234";
             byte[] passwordHashJoe, passwordSaltJoe, passwordHashAnn, passwordSaltAnn;
             authenticationHelper.CreatePasswordHash(password, out passwordHashJoe, out passwordSaltJoe);

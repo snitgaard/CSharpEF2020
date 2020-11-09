@@ -38,9 +38,7 @@ namespace PetShop.Infrastructure.Database.Helpers
                 claims.Add(new Claim(ClaimTypes.Role, "Administrator"));
 
             var token = new JwtSecurityToken(
-                new JwtHeader(new SigningCredentials(
-                    new SymmetricSecurityKey(secretBytes),
-                    SecurityAlgorithms.HmacSha256)),
+                new JwtHeader(new SigningCredentials(new SymmetricSecurityKey(secretBytes), SecurityAlgorithms.HmacSha256)),
                 new JwtPayload(null, // issuer - not needed (ValidateIssuer = false)
                     null, // audience - not needed (ValidateAudience = false)
                     claims.ToArray(),
